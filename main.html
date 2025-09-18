@@ -110,6 +110,9 @@
             font-size: 1.2rem;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            
+        
         }
         .start-button:hover {
             background-color: teal; /* Slightly lighter black */
@@ -165,6 +168,7 @@
             transition: background-color 0.3s ease;
             border: none;
             z-index: 50;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         .menu-button:hover {
             background-color: teal; 
@@ -284,7 +288,7 @@
                 padding: 16px;
             }
 
-            .c-button {
+            /* .c-button {
                 padding: 10px 15px;
                 font-size: 0.85rem;
                 min-width: unset;
@@ -292,7 +296,7 @@
             }
             .button-grid {
                 grid-template-columns: 1fr;
-            }
+            } */
             .modal-content {
                 padding: 20px;
             }
@@ -306,13 +310,13 @@
                 font-size: 0.8rem;
             }
 
-            .game-control-buttons {
+            /* .game-control-buttons {
                 flex-direction: column;
                 gap: 10px;
             }
             .game-control-buttons button {
                 width: 100%;
-            }
+            } */
     
             #landing-page h4 { font-size: 1rem; }
             #landing-page h1 { font-size: 2.2rem; }
@@ -340,7 +344,7 @@
             </div>
             <p>Interactive Media Literacy tool.</p>
             <p class="acknowledgement-text">"The Australian National University acknowledges, celebrates and pays our respects to the Ngunnawal and Ngambri people of the Canberra region and to all First Nations Australians on whose traditional lands we meet and work, and whose cultures are among the oldest continuing cultures in human history."</p>
-            <button id="start-game-button" class="start-button">Start</button>
+            <button id="start-game-button" class="start-button" type="button" onclick="showScreen('difficulty-selection-page')">Start</button>
         </div>
         
         <div id="difficulty-selection-page" class="hidden-screen">
@@ -399,10 +403,6 @@
 
         const buttons = document.querySelectorAll('.c-button', '.start-button');
         let gameActive = false;
-
-        // Audio elements
-        const hoverSound = document.getElementById('hoverSound');
-        const clickSound = document.getElementById('clickSound');
 
 
         function showScreen(screenId) {
@@ -532,22 +532,6 @@
             populateDifficultyList();              
         });
 
-        // Buttons
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                hoverSound.currentTime = 0; // Rewind to start
-                hoverSound.play().catch(e => console.log("Hover audio play failed:", e)); // Play and catch potential errors
-            });
-            button.addEventListener('click', (event) => {
-                clickSound.currentTime = 0; // Rewind to start
-                clickSound.play().catch(e => console.log("Click audio play failed:", e)); // Play and catch potential errors
-
-                if (gameActive) {
-                    const action = event.target.closest('.c-button')?.dataset.action;
-                }
-            });
-        });
-
 
         // Initial game load: show landing page
         window.onload = () => {
@@ -556,7 +540,6 @@
             // Ensure navigation links are populated on load for the menu
             populateMenuNavigation();
             populateDifficultyList();
-            enableButtons();
         };
     </script>
 </body>
