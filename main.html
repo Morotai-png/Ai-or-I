@@ -31,15 +31,17 @@
             background: linear-gradient(#000000,rgb(5, 157, 157));
             background-color: black;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
+            align-items: center;
+            justify-content: center;
             overflow-y: auto;
         }
         .screen-container {
             background: linear-gradient(#000000, #00F2F2);
+            justify-content: center;
+            align-items: center;
             border-radius: 16px;
             max-width:850px;
             width: 100%;
@@ -49,8 +51,6 @@
             flex-direction: column;
             gap: 20px;
             position: relative;
-            justify-content: center;
-            align-items: center;
         }
         .hidden-screen {
             display: none !important;
@@ -64,6 +64,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
             gap:24px;
             box-sizing: border-box;
             padding-top: 20px;
@@ -75,18 +76,21 @@
             font-family:'Courier New', Courier, monospace;
             font-size: 1.25rem;
             font-weight: 500;
+            text-align:center;
             color:teal;
         }
         #landing-page h1 {
             font-family: 'Zalando Sans Expanded', sans-serif;
             font-size: 3rem;
             font-weight: 700;
+            text-align:center;
             color: aqua
         }
 
         #landing-page p {
             font-size: 1.2rem;
             color:white;
+            text-align:center;
             margin-bottom: 20px; 
         }
         #landing-page .acknowledgement-text {
@@ -94,7 +98,8 @@
             font-style: italic;
             color: gray;
             line-height: 1.6;
-            max-width: 90%;
+            max-width: 60%;
+            text-align:center;
             margin-bottom: 30px;
         }
 
@@ -512,7 +517,7 @@
                 </ul>
 
             <h4 class="menu-section-title">Choose difficulty</h4>
-            <ul id="scenario-list" class="menu-list">
+            <ul id="difficulty-list" class="menu-list">
                 </ul>
 
             <h4 class="menu-section-title">Support & Reporting</h4>
@@ -541,8 +546,13 @@
         const gamePage = document.getElementById('game-page');
         const resultsPage = documents.getElementById('results-page');
 
-        const startGameButton = document.getElementById('start-game-button');
+        const startGameButton = document.getElementById('start-button');
         const difficultySelectButtons = document.querySelectorAll('.difficulty-select-button');
+
+        const gamePageTitle = document.getElementById('game-page-title');
+        const profileName = document.getElementById('profile-name');
+        const profileDescription = document.getElementById('profile-description')
+        const profileBox = document.getElementById('profile-display');
 
         // Menu elements
         const menuButtonLanding = document.getElementById('menu-button-landing');
@@ -559,7 +569,7 @@
 
 
         function showScreen(screenId) {
-            const screens = [landingPage, difficultySelectionPage, gamePage];
+            const screens = [landingPage, difficultySelectionPage, gamePage, resultsPage];
             screens.forEach(screen => {
                 screen.classList.add('hidden-screen');
             });
@@ -567,7 +577,6 @@
             const targetScreen = document.getElementById(screenId);
             if (targetScreen) { 
                 targetScreen.classList.remove('hidden-screen');
-
                 targetScreen.scrollIntoView({behavior:'smooth', block: 'start'});
             }
         }
@@ -582,18 +591,6 @@
 
             currentDifficultyId = difficultyId;
             currentGameId++;
-
-            if (game.isEnding) {
-                displayConsequences('final'); // Display the final consequence
-                actionButtonsContainer.style.display = 'none'; // Hide action buttons for ending
-                disableButtons();
-                analyzeScenarioButton.style.display = 'none'; // Hide Analyze button at ending
-                reflectOutcomeButton.style.display = 'none'; // Hide Reflect button at ending
-                restartScenarioButton.style.display = 'none'; // No restart scenario at final ending
-                continueButton.textContent = 'Play Again';
-                continueButton.style.display = 'block';
-                gameActive = false;
-            }
             showScreen('game-page');
         }
 
@@ -718,8 +715,8 @@
 
         // Event listener for Start Game button
         startGameButton.addEventListener('click', () => {
-            showScreen('difficulty-selection-page');
-            populateDifficultyList();                      // Ensure scenario list is populated for menu
+            populateDifficultyList(); 
+            showScreen('difficulty-selection-page');                    // Ensure scenario list is populated for menu
         });
 
         difficultySelectButtons.forEach(button => {
@@ -732,9 +729,10 @@
         // Initial game load: show landing page
         window.onload = () => {
             showScreen('landing-page');
+            
             // Ensure navigation links are populated on load for the menu
             populateMenuNavigation();
-            populateScenarioList();
+            populateDifficultyList();
         };
     </script>
 </body>
