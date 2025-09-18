@@ -42,8 +42,8 @@
             background-color: rgba(0,0,0,0.5);
             justify-content: center;
             align-items: center;
-            border-radius: 5px;
-            max-width:850px;
+            border-radius: 15px;
+            max-width: 850px;
             width: 90vh;
             height: 85vh;
             padding: 32px;
@@ -77,22 +77,19 @@
             font-family:'Courier New', Courier, monospace;
             font-size: 1.25rem;
             font-weight: 500;
-            text-align:center;
             color:teal;
         }
         #landing-page h1 {
             font-family: 'Zalando Sans Expanded', sans-serif;
             font-size: 3rem;
             font-weight: 700;
-            text-align:center;
-            color: aqua
+            color: aqua;
         }
 
         #landing-page p {
             font-size: 1.2rem;
             color:white;
-            text-align:center;
-            margin-bottom: 10px; 
+            margin-bottom: 5px; 
         }
         #landing-page .acknowledgement-text {
             font-size: 0.9rem;
@@ -100,8 +97,7 @@
             color: gray;
             line-height: 1.6;
             max-width: 80%;
-            text-align:center;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
         }
         .start-button {
             background-color: #000000; 
@@ -116,7 +112,7 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         .start-button:hover {
-            background-color: rgb(27, 54, 54); /* Slightly lighter black */
+            background-color: teal; /* Slightly lighter black */
             transform: translateY(-2px);
         }
         
@@ -157,8 +153,8 @@
         /* Menu button */
         .menu-button {
             font-family:'Courier New', Courier, monospace;
-            position: sticky;
-            top: 20px;
+            position: absolute;
+            top: 30px;
             left: 20px;
             background-color: #000000;
             color: white;
@@ -200,14 +196,14 @@
             width: 100%;
             position: relative;
             text-align: left;
-            color: #1A1A1A; /* ANU Black */
+            color: white; 
             line-height: 1.6;
         }
         .modal-content h3 {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 15px;
-            color: #1A1A1A; /* ANU Black */
+            color: white; 
         }
         .modal-content p {
             margin-bottom: 10px;
@@ -401,7 +397,7 @@
         const difficultyList = document.getElementById('difficulty-list');
         const menuNavList = menuModal.querySelector('.menu-list[data-section="navigation"]'); // Get the navigation list
 
-        const buttons = document.querySelectorAll('.c-button');
+        const buttons = document.querySelectorAll('.c-button', '.start-button');
         let gameActive = false;
 
         // Audio elements
@@ -418,7 +414,6 @@
             const targetScreen = document.getElementById(screenId);
             if (targetScreen) { 
                 targetScreen.classList.remove('hidden-screen');
-                targetScreen.scrollIntoView({behavior:'smooth', block: 'start'});
             }
         }
 
@@ -434,6 +429,14 @@
             buttons.forEach(button => {
                 button.disabled = true;
             });
+        }
+
+        // Function to reset the game (full restart from landing page)
+        function resetGame() {
+            currentScenarioId = null;
+            gameActive = false;
+            currentPartNumber = 0; // Reset part number
+            showScreen('landing-page');
         }
 
         function loadGame(difficultyId) { 
@@ -523,6 +526,12 @@
             });
         }
 
+        // Event listener for Start Game button
+        startGameButton.addEventListener('click', () => { 
+            showScreen('difficulty-selection-page');     
+            populateDifficultyList();              
+        });
+
         // Buttons
         buttons.forEach(button => {
             button.addEventListener('mouseenter', () => {
@@ -539,11 +548,6 @@
             });
         });
 
-        // Event listener for Start Game button
-        startGameButton.addEventListener('click', () => { 
-            showScreen('difficulty-selection-page');     
-            populateDifficultyList();              
-        });
 
         // Initial game load: show landing page
         window.onload = () => {
@@ -552,6 +556,7 @@
             // Ensure navigation links are populated on load for the menu
             populateMenuNavigation();
             populateDifficultyList();
+            enableButtons();
         };
     </script>
 </body>
