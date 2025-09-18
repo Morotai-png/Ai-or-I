@@ -31,20 +31,21 @@
             background: linear-gradient(#000000,rgb(5, 157, 157));
             background-color: black;
             display: flex;
-            min-height: 100vh;
-            padding: 20px;
+            min-height: 97.75vh;
+            padding: 10px;
             box-sizing: border-box;
             align-items: center;
             justify-content: center;
             overflow-y: auto;
         }
         .screen-container {
-            background: linear-gradient(#000000, #00F2F2);
+            background-color: rgba(0,0,0,0.5);
             justify-content: center;
             align-items: center;
-            border-radius: 16px;
+            border-radius: 5px;
             max-width:850px;
-            width: 100%;
+            width: 90vh;
+            height: 85vh;
             padding: 32px;
             text-align: center;
             display: flex;
@@ -55,9 +56,9 @@
         .hidden-screen {
             display: none !important;
         }
-
+        
         /* Specific Screen styles */
-        #landingpage, #difficulty-selection-page, #game-page, #results-page {
+        #landing-page, #difficulty-selection-page {
             min-height: 100vh;
             width: 100%;
             display: flex;
@@ -91,18 +92,17 @@
             font-size: 1.2rem;
             color:white;
             text-align:center;
-            margin-bottom: 20px; 
+            margin-bottom: 10px; 
         }
         #landing-page .acknowledgement-text {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-style: italic;
             color: gray;
             line-height: 1.6;
-            max-width: 60%;
+            max-width: 80%;
             text-align:center;
             margin-bottom: 30px;
         }
-
         .start-button {
             background-color: #000000; 
             color: white;
@@ -122,21 +122,23 @@
         
         /* Difficutly Selection Page */
         #difficulty-selection-page h2 {
+            font-family: 'Zalando Sans Expanded', sans-serif;
             font-size: 2rem;
             font-weight: 600;
-            color: #1A1A1A; 
+            color: white; 
             margin-bottom: 30px;
         }
 
         .difficulty-selection-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: auto auto auto;
             gap: 15px;
             width: 100%;
             max-width: 700px;
         }
         .difficulty-select-button {
-            background-color: aqua; 
+            font-family: 'Zalando Sans Expanded', sans-serif;
+            background-color: black; 
             color: white;
             padding: 20px 15px;
             border-radius: 10px;
@@ -149,145 +151,16 @@
             text-align: center;
         }
         .difficulty-select-button:hover {
-            background-color: teal; /* Darker ANU Gold */
+            background-color: teal; 
             transform: translateY(-2px);
         }
-
-        /* Tinder game page */
-        #game-page .game-title {
-            font-size: 3rem; /* Larger title for the game page */
-            font-weight: 700;
-            color: #1A1A1A; 
-            margin-bottom: 20px;
-        } 
-
-        .profile-box {
-            background-color: aqua; 
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 16px;
-            min-height: 140px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: 1.1rem;
-            color: #1A1A1A; 
-            line-height: 1.6;
-            transition: background-color 0.5s ease; /* Smooth transition for color change */
-        }
-
-        .profile-box h3 { /* Style for the "Part X" heading */
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1A1A1A;
-            margin-bottom: 8px;
-        }
-
-        .c-button {
-            background-color: aqua; /* Blue background */
-            color: black;
-            padding: 12px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 10px teal;
-            border: none;
-            flex-grow: 1;
-            min-width: 140px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 0.95rem;
-        }
-
-        .c-button:hover { 
-            background-color: #333333; /* Slightly lighter black */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .c-button:disabled {
-        background-color: #9CA3AF;
-        cursor: not-allowed;
-        box-shadow: none;
-        transform: none;
-        }
-
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            justify-content: center;
-            width: 100%; 
-        }
-
-        @media (max-width: 768px) {
-            .button-grid {
-                grid-template-columns: 8ch auto;
-            }
-        }
-        @media (max-width: 480px) {
-            .button-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .game-control-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
-            width: 100%; /* Ensure it takes full width */
-        }
-        .game-control-buttons button {
-            background-color: #000000; 
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border: none;
-            flex-grow: 1;
-            min-width: 150px;
-        }
-        .game-control-buttons button:hover {
-            background-color: #333333; /* Darker black */
-        }
-        .game-control-buttons button.restart-scenario-button {
-            background-color: #DC2626; /* Red for restart */
-        }
-        .game-control-buttons button.restart-scenario-button:hover {
-            background-color: #B91C1C; /* Darker Red */
-        }
-        .game-control-buttons button.continue-button-gold {
-            background-color: #C69214; /* ANU Gold for continue */
-        }
-        .game-control-buttons button.continue-button-gold:hover {
-            background-color: #A87E12; /* Darker ANU Gold */
-        }
-
-        .action-area {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: center;
-            margin-top: 16px; 
-            width: 100%;
-        }
-
         /* Menu button */
         .menu-button {
-            position: absolute;
+            font-family:'Courier New', Courier, monospace;
+            position: sticky;
             top: 20px;
             left: 20px;
-            background-color: #000000; /* ANU Black */
+            background-color: #000000;
             color: white;
             padding: 10px 15px;
             border-radius: 8px;
@@ -298,13 +171,13 @@
             z-index: 50;
         }
         .menu-button:hover {
-            background-color: #333333; /* Darker ANU Black */
+            background-color: teal; 
         }
 
         /* Modal Styles */
         .modal {
             display: none;
-            position: fixed;
+            position:fixed;
             z-index: 1000;
             left: 0;
             top: 0;
@@ -318,7 +191,7 @@
             box-sizing: border-box;
         }
         .modal-content {
-            background-color: #FFFFFF; /* ANU White */
+            background-color: black; /* ANU White */
             margin: auto;
             padding: 30px;
             border-radius: 12px;
@@ -340,7 +213,7 @@
             margin-bottom: 10px;
         }
         .close-button {
-            color: #1A1A1A; /* ANU Black */
+            color: white;
             position: absolute;
             top: 15px;
             right: 25px;
@@ -379,7 +252,7 @@
             margin-bottom: 10px;
         }
         .menu-list a {
-            color: #1A1A1A; /* ANU Black */
+            color: white; /* ANU Black */
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s ease;
@@ -392,7 +265,7 @@
             font-weight: 600;
             margin-top: 20px;
             margin-bottom: 10px;
-            color: #1A1A1A; /* ANU Black */
+            color: white; /* ANU Black */
             border-bottom: 1px solid #F4F4F4; /* ANU Beige border */
             padding-bottom: 5px;
         }
@@ -402,8 +275,9 @@
             .screen-container {
                 padding: 20px;
                 gap: 12px;
+                
             }
-            #landing-page, #difficulty-selection-page, #game-page, #results-page {
+            #landing-page, #difficulty-selection-page {
                 min-height: 80vh; /* Adjust for smaller screens if 100vh is too much */
                 padding-top: 15px;
                 padding-bottom: 15px;
@@ -447,7 +321,7 @@
             #landing-page h4 { font-size: 1rem; }
             #landing-page h1 { font-size: 2.2rem; }
             #landing-page p { font-size: 0.9rem; }
-            #landing-page .acknowledgement-text { font-size: 0.8rem; }
+            #landing-page .acknowledgement-text { font-size: 0.7rem; }
             #difficulty-selection-page h2 { font-size: 1.3rem; }
             .difficulty-selection-grid {
                 grid-template-columns: 1fr;
@@ -459,8 +333,9 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="screen container">
+    <div class="screen-container">
         <div id="landing-page">
             <button id="menu-button-landing" class="menu-button">Menu</button>
             <div id="top-of-page" class="flex flex-col items-center">
@@ -482,35 +357,10 @@
             </div>
         </div>
 
-        <div id="game-page" class="hidden-screen">
-            <button id="menu-button-game" class="menu-button">Menu</button>
-
-            <h1 id="game-page-title" class="game-title"></h1>
-
-            <div id="profile-display" class="profile-box">
-                <h3 id="profile-name"></h3>
-                <p id="scenario-description"></p>
-            </div>
-
-            <div class="action-area">
-                <div class="button-grid" id="action-buttons">
-                    <button class="c-button" data-action="Like">
-                    </button>
-                    <button class="c-button" data-action="Dislike">
-                    </button>
-                </div>
-                <div class="game-control-buttons">
-                <button id="reflect-outcome-button" class="llm-button">✨ Reflect on Outcome</button>
-                <button id="restart-scenario-button" class="restart-scenario-button" style="display: none;">Restart This Scenario</button>
-                <button id="continue-button" class="continue-button-gold" style="display: none;">See What Happens Next</button>
-            </div>
-            </div>
-        </div>
-
-    <div id="menuModal" class="modal">
+        <div id="menuModal" class="modal">
         <div class="modal-content">
             <span class="close-button" data-modal-target="menuModal">&times;</span>
-            <h3>Game Menu</h3>
+            <h1 class="font-mono">Game Menu</h1>
 
             <h4 class="menu-section-title">Navigation</h4>
             <ul data-section="navigation" class="menu-list">
@@ -535,24 +385,12 @@
     <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-click-1869.mp3" preload="auto"></audio>
 
     <script>
-
-        // Game state variables
-        let currentGameId = null;
-        let gameActive = false;
-        
         // DOM Elements
         const landingPage = document.getElementById('landing-page');
-        const difficultySelectionPage = document.getElementById('difficulty-selection-page');
-        const gamePage = document.getElementById('game-page');
-        const resultsPage = documents.getElementById('results-page');
+        const difficultySelectionPage = document.getElementById('difficulty-selection-page')
 
-        const startGameButton = document.getElementById('start-button');
+        const startGameButton = document.getElementById('start-game-button');
         const difficultySelectButtons = document.querySelectorAll('.difficulty-select-button');
-
-        const gamePageTitle = document.getElementById('game-page-title');
-        const profileName = document.getElementById('profile-name');
-        const profileDescription = document.getElementById('profile-description')
-        const profileBox = document.getElementById('profile-display');
 
         // Menu elements
         const menuButtonLanding = document.getElementById('menu-button-landing');
@@ -560,8 +398,11 @@
         const menuButtonGame = document.getElementById('menu-button-game');
         const menuModal = document.getElementById('menuModal');
         const menuModalCloseButton = menuModal.querySelector('.close-button');
-        const scenarioList = document.getElementById('scenario-list');
+        const difficultyList = document.getElementById('difficulty-list');
         const menuNavList = menuModal.querySelector('.menu-list[data-section="navigation"]'); // Get the navigation list
+
+        const buttons = document.querySelectorAll('.c-button');
+        let gameActive = false;
 
         // Audio elements
         const hoverSound = document.getElementById('hoverSound');
@@ -569,7 +410,7 @@
 
 
         function showScreen(screenId) {
-            const screens = [landingPage, difficultySelectionPage, gamePage, resultsPage];
+            const screens = [landingPage, difficultySelectionPage];
             screens.forEach(screen => {
                 screen.classList.add('hidden-screen');
             });
@@ -579,24 +420,6 @@
                 targetScreen.classList.remove('hidden-screen');
                 targetScreen.scrollIntoView({behavior:'smooth', block: 'start'});
             }
-        }
-
-        function loadGame(difficultyId) {
-            const version = versions[difficultyId];
-            if (!version) { 
-                console.error("Error: Difficulty not found: ", difficultyId);
-                scenarioDescriptionDisplay.innerHTML = `<p>Error! Could not load the next part of the story. Please restart the game from the menu.</p>`;
-                return;
-            }
-
-            currentDifficultyId = difficultyId;
-            currentGameId++;
-            showScreen('game-page');
-        }
-
-        function displayResults(action) { 
-            const game = games[currentGameId];
-            showScreen('results-page');
         }
 
         // Function to enable all action buttons
@@ -613,35 +436,34 @@
             });
         }
 
-        // Function to reset the game (full restart from landing page)
-        function resetGame() {
-            currentScenarioId = null;
-            gameActive = false;
-            currentPartNumber = 0; // Reset part number
-            showScreen('landing-page');
+        function loadGame(difficultyId) { 
+            const difficulty = difficultyList[difficultyId];
+            if (!difficulty) {
+
+            }
         }
 
         // Menu Modal Logic
         menuButtonLanding.addEventListener('click', () => {
             menuModal.style.display = 'flex';
             populateMenuNavigation(); // Populate navigation links
-            populateScenarioList(); // Populate scenario links
+            populateDifficultyList(); // Populate scenario links
         });
         menuButtonSelection.addEventListener('click', () => {
             menuModal.style.display = 'flex';
             populateMenuNavigation(); // Populate navigation links
-            populateScenarioList(); // Populate scenario links
+            populateDifficultyList(); // Populate scenario links
         });
+        
         menuButtonGame.addEventListener('click', () => {
             menuModal.style.display = 'flex';
             populateMenuNavigation(); // Populate navigation links
-            populateScenarioList(); // Populate scenario links
+            populateDifficultyList(); // Populate scenario links
         });
 
-        menuModalCloseButton.addEventListener('click', () => {
+        menuModalCloseButton.addEventListener('click', (e) => {
             menuModal.style.display = 'none';
         });
-
 
         function populateMenuNavigation() {
             menuNavList.innerHTML = ''; // Clear existing navigation list
@@ -671,14 +493,18 @@
             });
             newGameItem.appendChild(newGameLink);
             menuNavList.appendChild(newGameItem);
+
+            menuModalCloseButton.addEventListener('click', () => {
+            menuModal.style.display = 'none';
+            });
         }
 
         function populateDifficultyList() {
             difficultyList.innerHTML = '';
             const initialDifficultyOptions = [
-                {id: 'easy', text: '30 profiles in 2 minutes'},
-                {id: 'medium', text: '30 profiles in 1 minute'},
-                {id: 'hard', text: '30 profiles in 30 seconds'}
+                {id: 'easy', text: 'Easy: 30 profiles in 2 minutes'},
+                {id: 'medium', text: 'Medium: 30 profiles in 1 minute'},
+                {id: 'hard', text: 'Hard: 30 profiles in 30 seconds'}
             ];
 
             initialDifficultyOptions.forEach(option => {
@@ -691,12 +517,12 @@
                     e.preventDefault();
                     menuModal.style.display = 'none';
                     currentPartNumber = 0; // Reset part number for a new scenario start
-                    loadScenario(option.id); // Load selected scenario
                 });
                 listItem.appendChild(link);
-                scenarioList.appendChild(listItem);
+                difficultyList.appendChild(listItem);
             });
         }
+
         // Buttons
         buttons.forEach(button => {
             button.addEventListener('mouseenter', () => {
@@ -708,23 +534,16 @@
                 clickSound.play().catch(e => console.log("Click audio play failed:", e)); // Play and catch potential errors
 
                 if (gameActive) {
-                    const action = event.target.closest('.btn')?.dataset.action;
+                    const action = event.target.closest('.c-button')?.dataset.action;
                 }
             });
         });
 
         // Event listener for Start Game button
-        startGameButton.addEventListener('click', () => {
-            populateDifficultyList(); 
-            showScreen('difficulty-selection-page');                    // Ensure scenario list is populated for menu
+        startGameButton.addEventListener('click', () => { 
+            showScreen('difficulty-selection-page');     
+            populateDifficultyList();              
         });
-
-        difficultySelectButtons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                const gameId = event.target.dataset.
-                loadGame(gameId)
-            });
-        })
 
         // Initial game load: show landing page
         window.onload = () => {
