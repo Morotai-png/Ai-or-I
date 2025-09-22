@@ -514,6 +514,14 @@
             }
         }
 
+        const profiles = {
+        "AI_1": {
+            "name": "Jason",
+            "answer": "AI",
+            "image": "https://github.com/Morotai-png/Ai-or-I/blob/main/Images/AI_1.jpg?raw=true"
+            }
+        }
+
 
         // Function to show a specific screen and hide others
         function showScreen(screenId) {
@@ -542,9 +550,6 @@
             });
         }
 
-        function displayProfile() { 
-
-        }
         // Function to reset the game (full restart from landing page)
         function resetGame() {
             currentGameId = null;
@@ -572,19 +577,19 @@
         // Menu Modal Logic
         menuButtonLanding.addEventListener('click', () => {
             menuModal.style.display = 'flex';
-            populateMenuNavigation(); // Populate navigation links
-            populateDifficultyList(); // Populate scenario links
+            populateMenuNavigation();
+            populateDifficultyList(); 
         });
         menuButtonSelection.addEventListener('click', () => {
             menuModal.style.display = 'flex';
-            populateMenuNavigation(); // Populate navigation links
-            populateDifficultyList(); // Populate scenario links
+            populateMenuNavigation(); 
+            populateDifficultyList(); 
         });
         
         menuButtonGame.addEventListener('click', () => {
             menuModal.style.display = 'flex';
-            populateMenuNavigation(); // Populate navigation links
-            populateDifficultyList(); // Populate scenario links
+            populateMenuNavigation(); 
+            populateDifficultyList(); 
         });
 
         menuModalCloseButton.addEventListener('click', (e) => {
@@ -649,6 +654,20 @@
                 difficultyList.appendChild(listItem);
             });
         }
+
+        function populateProfiles(obj) { 
+            const section = document.querySelector("section");
+            const profiles = obj.members;
+
+            for (const prof of profiles) { 
+                const myProfile = document.createElement("profile");
+                const myList = document.createElement("ul");
+            }
+        }
+
+        // async function populate() { 
+        //     const requestURL = 
+        // }
 
         // Event listener for Start Game button
         startGameButton.addEventListener('click', () => { 
