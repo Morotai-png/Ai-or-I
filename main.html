@@ -58,7 +58,7 @@
         }
         
         /* Specific Screen styles */
-        #landing-page, #difficulty-selection-page {
+        #landing-page, #difficulty-selection-page, #game-page {
             min-height: 100vh;
             width: 100%;
             display: flex;
@@ -111,8 +111,6 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            
-        
         }
         .start-button:hover {
             background-color: teal; /* Slightly lighter black */
@@ -144,15 +142,34 @@
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(198, 146, 20, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             border: none;
             font-size: 1.05rem;
             text-align: center;
         }
+
         .difficulty-select-button:hover {
             background-color: teal; 
             transform: translateY(-2px);
         }
+
+        /* Game page */
+        .profile-box {background-color: #F4F4F4; /* ANU Beige */
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #1A1A1A; /* ANU Black */
+            line-height: 1.6;
+            transition: background-color 0.5s ease; /* Smooth transition for color change */
+        }
+        
         /* Menu button */
         .menu-button {
             font-family:'Courier New', Courier, monospace;
@@ -191,7 +208,7 @@
             box-sizing: border-box;
         }
         .modal-content {
-            background-color: black; /* ANU White */
+            background-color: black;
             margin: auto;
             padding: 30px;
             border-radius: 12px;
@@ -385,9 +402,12 @@
     <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-click-1869.mp3" preload="auto"></audio>
 
     <script>
+
+        let currentProfileNumber = 0;
         // DOM Elements
         const landingPage = document.getElementById('landing-page');
-        const difficultySelectionPage = document.getElementById('difficulty-selection-page')
+        const difficultySelectionPage = document.getElementById('difficulty-selection-page');
+        
 
         const startGameButton = document.getElementById('start-game-button');
         const difficultySelectButtons = document.querySelectorAll('.difficulty-select-button');
@@ -435,7 +455,7 @@
         function resetGame() {
             currentScenarioId = null;
             gameActive = false;
-            currentPartNumber = 0; // Reset part number
+            currentProfileNumber = 0; // Reset part number
             showScreen('landing-page');
         }
 
@@ -532,6 +552,14 @@
             populateDifficultyList();              
         });
 
+        // Event listeners for scenario selection buttons
+        difficultySelectButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const difficultyId = event.target.dataset.startDifficulty;
+                currentProfileNumber = 0; // Reset part number for a new scenario start
+                loadScenario(scenarioId);
+            });
+        });
 
         // Initial game load: show landing page
         window.onload = () => {
