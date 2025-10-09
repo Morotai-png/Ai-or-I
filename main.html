@@ -416,9 +416,9 @@
             <button id="menu-button-selection" class="menu-button">Menu</button>
             <h2>Choose difficulty:</h2>
             <div class="difficulty-selection-grid">
-                <button class="difficulty-select-button" data-start="easy">Easy (2 min) </button>
-                <button class="difficulty-select-button" data-start="medium">Medium (1 min) </button>
-                <button class="difficulty-select-button" data-start="hard">Hard (30 sec) </button>
+                <button class="difficulty-select-button" data-difficulty="easy"> Easy (2 min) </button>
+                <button class="difficulty-select-button" data-difficulty="medium">Medium (1 min) </button>
+                <button class="difficulty-select-button" data-difficulty="hard">Hard (30 sec) </button>
             </div>
         </div>
 
@@ -494,7 +494,7 @@
         const difficultyList = document.getElementById('difficulty-list');
         const menuNavList = menuModal.querySelector('.menu-list[data-section="navigation"]'); // Get the navigation list
 
-        const buttons = document.querySelectorAll('.c-button', '.start-button');
+        // const buttons = document.querySelectorAll('.c-button', '.start-button');
         let gameActive = false;
         let currentGameId = null;
         let currentTimer;
@@ -665,17 +665,13 @@
             }
         }
 
-        // async function populate() { 
-        //     const requestURL = 
-        // }
-
         // Event listener for Start Game button
         startGameButton.addEventListener('click', () => { 
-            showScreen('difficulty-selection-page');     
-            populateDifficultyList();              
+            populateDifficultyList(); 
+            showScreen('difficulty-selection-page');              
         });
 
-        // Event listeners for scenario selection buttons
+        // Event listeners for difficulty selection buttons
         difficultySelectButtons.forEach(button => {
             button.addEventListener('click', (event) => {
                 event.preventDefault();
@@ -683,6 +679,7 @@
                 console.log(event.target.dataset.difficulty);
                 currentProfileNumber = 0; // Reset part number for a new scenario start
                 loadGame(difficultyId);
+                showScreen('game-page');
             });
         });
 
