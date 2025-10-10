@@ -206,7 +206,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             justify-content: center;
-            width: 100%; /* Ensure it takes full width */
+            width: 100%; 
         }
 
         .action-area {
@@ -214,10 +214,21 @@
             flex-direction: column;
             gap: 16px;
             align-items: center;
-            margin-top: 16px; /* Margin above action buttons */
-            width: 100%; /* Ensure it takes full width */ 
+            margin-top: 16px; 
+            width: 100%; 
         }
-        
+        #clockdiv{
+            font-family: 'Zalando Sans Expanded', sans-serif;
+            color: #fff;
+            font-weight: 150;
+            text-align: center;
+            font-size: 40px;
+        }
+
+        .text{
+            padding-top: 5px;
+            font-size: 16px;
+        }
         /* Menu button */
         .menu-button {
             font-family:'Courier New', Courier, monospace;
@@ -424,23 +435,29 @@
 
         <div id="game-page" class="hidden-screen">
             <button id="menu-button-game" class="menu-button">Menu</button>
-
-            <div class="timing">
-                <h2 class="colon"> : </h2>
-            </div>
                 <div id="profile-display" class="profile-box">
                     <h3 id="profile-name"></h3>
-                    <div class="profile-image"></div>
+                    <img id="profile-image" src="Images/AI_1.jpg"></div>
                     <div class="action-area">
                     <div class="button-grid" id="action-buttons">
                         <button class="c-button" data-action="fake"><i class="fa fa-close"></i></button>
                         <button class="c-button" data-action="real"><i class="fa fa-heart"></i></button>
                     </div>
                 </div>
-                </div>
-            
-            </div>
+            </div> 
+              <div id="clockdiv">
+                    <div>
+                        <span class="minutes"></span>
+                        <div class="text"></div>
+                    </div>
+                    <div>
+                        <span class="minutes"></span>
+                        <div class="text"></div>
+                    </div>
+
+                </div>   
         </div>
+    </div>
 
         <div id="menuModal" class="modal">
         <div class="modal-content">
@@ -474,7 +491,7 @@
         let currentProfileNumber = 0;
         let difficultyId = null;
         let currentProfile = 0;
-
+        let countdownTimer = 0;
         // DOM Elements
         const landingPage = document.getElementById('landing-page');
         const difficultySelectionPage = document.getElementById('difficulty-selection-page');
@@ -485,6 +502,8 @@
         // const difficultyPageTitle = document.getElementById('difficulty-page-title')
 
         const profileBox = document.getElementById('profile-box');
+        const profileImg = document.getElementById('profile-image');
+
         // Menu elements
         const menuButtonLanding = document.getElementById('menu-button-landing');
         const menuButtonSelection = document.getElementById('menu-button-selection');
@@ -500,16 +519,13 @@
         let currentTimer;
 
         const difficulties = {            
-            '1':{
-                difficulty: "easy",
+            'easy':{
                 time: "120",
             },
-            '2':{
-                difficulty: "medium",
+            'medium':{
                 time:"60"
             },
-            '3':{
-                difficulty: "hard",
+            'hard':{
                 time: "30"
             }
         }
@@ -518,10 +534,9 @@
         "AI_1": {
             "name": "Jason",
             "answer": "AI",
-            "image": "https://github.com/Morotai-png/Ai-or-I/blob/main/Images/AI_1.jpg?raw=true"
+            "image": "Images/AI_1.jpg"
             }
         }
-
 
         // Function to show a specific screen and hide others
         function showScreen(screenId) {
@@ -535,6 +550,38 @@
                 targetScreen.classList.remove('hidden-screen');
             }
         }
+
+        function tick(time) {
+            if (time <= 0) {
+                return 0;
+            }
+
+            countdownTimer = setTimeout(() => {
+                const newTime = time - 1;
+                document.getElementById('clockdiv').innerText = formatTime(newTime); 
+                tick(newTime);
+            }, 1000);
+        }
+
+        function formatTime(time) {
+            minutes = Math.floor(time / 60);
+            seconds = time - minutes * 60;
+  
+            if (String(seconds).length == 1) {
+                return String(minutes) + ":0" + String(seconds);
+            }
+  
+            return String(minutes) + ":" + String(seconds);
+        }
+
+        function startGame(totalSeconds) {
+            clearTimeout(countdownTimer); 
+            formatTime(totalSeconds);
+            tick(totalSeconds);
+            // showScreen('results-page');
+        }
+
+        
 
         // Function to enable all action buttons
         function enableButtons() {
@@ -558,19 +605,28 @@
             showScreen('landing-page');
         }
 
+        // function loadProfile() { 
+        //     var image = profileImg;
+        //     const profile = profiles["AI_1"];
+        //     image.src = profile[image];
+        // }
+
         function loadGame(difficultyId) { 
-            const difficulty = difficulties[difficultyId];
+            if (difficultyId == "easy") { 
+                difficulty = difficulties;
+                countdownTimer = 120;
+            } else if (difficultyId == "medium") { 
+                difficulty = difficulties;
+                countdownTimer = 60;
+            } else if (difficultyId == "hard") { 
+                difficulty = difficulties;
+                countdownTimer = 30;
+            }
             if (!difficulty) {
                 console.error("Difficulty not found:", difficultyId);
                 return;
             }
-
-            currentGameId = 0;
-            currentTimer = 0;
-
-            // if (numProfiles == 30 || currentTimer == 0) { 
-            //     showScreen('results-page');
-            // } 
+            startGame(countdownTimer);
             showScreen('game-page');
         }
 
@@ -655,16 +711,6 @@
             });
         }
 
-        function populateProfiles(obj) { 
-            const section = document.querySelector("section");
-            const profiles = obj.members;
-
-            for (const prof of profiles) { 
-                const myProfile = document.createElement("profile");
-                const myList = document.createElement("ul");
-            }
-        }
-
         // Event listener for Start Game button
         startGameButton.addEventListener('click', () => { 
             populateDifficultyList(); 
@@ -676,10 +722,8 @@
             button.addEventListener('click', (event) => {
                 event.preventDefault();
                 const difficultyId = event.target.dataset.difficulty;
-                console.log(event.target.dataset.difficulty);
                 currentProfileNumber = 0; // Reset part number for a new scenario start
                 loadGame(difficultyId);
-                showScreen('game-page');
             });
         });
 
