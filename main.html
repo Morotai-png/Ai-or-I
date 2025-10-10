@@ -435,17 +435,7 @@
 
         <div id="game-page" class="hidden-screen">
             <button id="menu-button-game" class="menu-button">Menu</button>
-                <div id="profile-display" class="profile-box">
-                    <h3 id="profile-name"></h3>
-                    <img id="profile-image" src="Images/AI_1.jpg"></div>
-                    <div class="action-area">
-                    <div class="button-grid" id="action-buttons">
-                        <button class="c-button" data-action="fake"><i class="fa fa-close"></i></button>
-                        <button class="c-button" data-action="real"><i class="fa fa-heart"></i></button>
-                    </div>
-                </div>
-            </div> 
-              <div id="clockdiv">
+            <div id="clockdiv">
                     <div>
                         <span class="minutes"></span>
                         <div class="text"></div>
@@ -455,7 +445,17 @@
                         <div class="text"></div>
                     </div>
 
-                </div>   
+                </div>
+                <div id="profile-display" class="profile-box">
+                    <h3 id="profile-name"></h3>
+                    <img id="profile-image" src="Images/AI_1.jpg" data-action="fake"></div>
+                    <div class="action-area">
+                        <div class="button-grid" id="action-buttons">
+                            <button class="c-button" data-action="fake"><i class="fa fa-close"></i></button>
+                            <button class="c-button" data-action="real"><i class="fa fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>    
         </div>
     </div>
 
@@ -513,7 +513,7 @@
         const difficultyList = document.getElementById('difficulty-list');
         const menuNavList = menuModal.querySelector('.menu-list[data-section="navigation"]'); // Get the navigation list
 
-        // const buttons = document.querySelectorAll('.c-button', '.start-button');
+        const buttons = document.querySelectorAll('.c-button', '.start-button');
         let gameActive = false;
         let currentGameId = null;
         let currentTimer;
@@ -533,7 +533,7 @@
         const profiles = {
         "AI_1": {
             "name": "Jason",
-            "answer": "AI",
+            "answer": "fake",
             "image": "Images/AI_1.jpg"
             }
         }
@@ -570,31 +570,30 @@
             if (String(seconds).length == 1) {
                 return String(minutes) + ":0" + String(seconds);
             }
-  
             return String(minutes) + ":" + String(seconds);
         }
 
+        function changeProfile() {
+            image = profileImg.src;
+        }
         function startGame(totalSeconds) {
             clearTimeout(countdownTimer); 
             formatTime(totalSeconds);
             tick(totalSeconds);
+
+            buttons.forEach(button => {
+                button.addEventListener('click',  (event) => { 
+                    const action = event.target.closest('.c-button')?.dataset.action;
+                    if (action) { 
+                        // if (action == currentProfile.answer) { 
+                        // } 
+                        // changeProfile();
+                        // if (action == currentProfile.answer) { 
+                        // } 
+                    }
+                });
+            });
             // showScreen('results-page');
-        }
-
-        
-
-        // Function to enable all action buttons
-        function enableButtons() {
-            buttons.forEach(button => {
-                button.disabled = false;
-            });
-        }
-
-        // Function to disable all action buttons
-        function disableButtons() {
-            buttons.forEach(button => {
-                button.disabled = true;
-            });
         }
 
         // Function to reset the game (full restart from landing page)
