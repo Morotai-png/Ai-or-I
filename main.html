@@ -157,7 +157,7 @@
 
         /* Game page */
         .profile-box {
-            background-color: black; /* ANU Beige */
+            background-color: black; 
             border-radius: 12px;
             padding: 24px;
             margin-bottom: 16px;
@@ -169,9 +169,9 @@
             align-items: center;
             text-align: center;
             font-size: 1.1rem;
-            color: #1A1A1A; /* ANU Black */
+            color: #1A1A1A; 
             line-height: 1.6;
-            transition: background-color 0.5s ease; /* Smooth transition for color change */
+            transition: background-color 0.5s ease; 
         }
 
         .profile-image {
@@ -183,18 +183,13 @@
             
         }
         .c-button {
-            background-color: aqua; /* ANU Black */
+            background-color: aqua; 
             color: black;
-            min-height:10vh;
-            min-width:10vh;
-            border-radius: 8px;
+            border-radius: 50%;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             border: none;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -206,7 +201,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             justify-content: center;
-            width: 100%; 
+            width: 75%; 
         }
 
         .action-area {
@@ -217,12 +212,28 @@
             margin-top: 16px; 
             width: 100%; 
         }
-        #clockdiv{
+       
+        #clockdiv { 
             font-family: 'Zalando Sans Expanded', sans-serif;
             color: #fff;
             font-weight: 150;
             text-align: center;
             font-size: 40px;
+        }
+        
+        #textdiv { 
+            font-family: 'Zalando Sans Expanded', sans-serif;
+            color: #fff;
+            font-weight: 150;
+            text-align: center;
+            font-size: 40px;
+        }
+        .text-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            justify-content: center;
+            width: 75%; 
         }
 
         .text{
@@ -305,8 +316,8 @@
             cursor: pointer;
         }
         .loading-spinner {
-            border: 4px solid #F4F4F4; /* ANU Beige */
-            border-top: 4px solid #000000; /* ANU Black */
+            border: 4px solid #F4F4F4; 
+            border-top: 4px solid #000000;
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -328,7 +339,7 @@
             margin-bottom: 10px;
         }
         .menu-list a {
-            color: white; /* ANU Black */
+            color: white; 
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s ease;
@@ -341,8 +352,8 @@
             font-weight: 600;
             margin-top: 20px;
             margin-bottom: 10px;
-            color: white; /* ANU Black */
-            border-bottom: 1px solid #F4F4F4; /* ANU Beige border */
+            color: white; 
+            border-bottom: 1px solid #F4F4F4; 
             padding-bottom: 5px;
         }
 
@@ -354,7 +365,7 @@
                 
             }
             #landing-page, #difficulty-selection-page #game-page, #results-page {
-                min-height: 80vh; /* Adjust for smaller screens if 100vh is too much */
+                min-height: 80vh; 
                 padding-top: 15px;
                 padding-bottom: 15px;
             }
@@ -364,7 +375,7 @@
                 padding: 16px;
             }
 
-            /* .c-button {
+            .c-button {
                 padding: 10px 15px;
                 font-size: 0.85rem;
                 min-width: unset;
@@ -372,7 +383,8 @@
             }
             .button-grid {
                 grid-template-columns: 1fr;
-            } */
+            }
+
             .modal-content {
                 padding: 20px;
             }
@@ -385,19 +397,12 @@
                 padding: 8px 12px;
                 font-size: 0.8rem;
             }
-
-            /* .game-control-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .game-control-buttons button {
-                width: 100%;
-            } */
     
             #landing-page h4 { font-size: 1rem; }
             #landing-page h1 { font-size: 2.2rem; }
             #landing-page p { font-size: 0.9rem; }
             #landing-page .acknowledgement-text { font-size: 0.7rem; }
+            
             #difficulty-selection-page h2 { font-size: 1.3rem; }
             .difficulty-selection-grid {
                 grid-template-columns: 1fr;
@@ -435,25 +440,31 @@
 
         <div id="game-page" class="hidden-screen">
             <button id="menu-button-game" class="menu-button">Menu</button>
-            <div id="clockdiv">
-                    <div>
-                        <span class="minutes"></span>
-                        <div class="text"></div>
+            <div id="profile-display" class="profile-box">
+                <div class="text-grid" id="info"> 
+                    <div id="clockdiv">
+                        <div>
+                            <span class="minutes"></span>
+                            <div class="text"></div>
                     </div>
-                    <div>
-                        <span class="minutes"></span>
-                        <div class="text"></div>
+                        <div>
+                            <span class="minutes"></span>
+                            <div class="text"></div>
                     </div>
-
                 </div>
-                <div id="profile-display" class="profile-box">
-                    <h3 id="profile-name"></h3>
-                    <img id="profile-image" src="Images/AI_1.jpg" data-action="fake"></div>
-                    <div class="action-area">
-                        <div class="button-grid" id="action-buttons">
-                            <button class="c-button" data-action="fake"><i class="fa fa-close"></i></button>
-                            <button class="c-button" data-action="real"><i class="fa fa-heart"></i></button>
+                    <div id="textdiv">
+                        <div>
+                            <span class="score"></span>
+                            <div class="text"></div>
+                        </div>
                     </div>
+                </div>
+            <h3 id="profile-name"></h3>
+            <img id="profile-image" src="Images/AI_1.jpg" data-action="AI">
+            <div class="action-area">
+                <div class="button-grid" id="action-buttons">
+                    <button class="c-button" data-action="AI"><i class="fa fa-close"></i></button>
+                    <button class="c-button" data-action="R"><i class="fa fa-heart"></i></button>
                 </div>
             </div>    
         </div>
@@ -490,17 +501,18 @@
 
         let currentProfileNumber = 0;
         let difficultyId = null;
-        let currentProfile = 0;
         let countdownTimer = 0;
+        let score = 0; 
+        let timer = document.getElementById('clockdiv').innerText;
+        
         // DOM Elements
         const landingPage = document.getElementById('landing-page');
         const difficultySelectionPage = document.getElementById('difficulty-selection-page');
         const gamePage = document.getElementById('game-page');
         const startGameButton = document.getElementById('start-game-button');
         const difficultySelectButtons = document.querySelectorAll('.difficulty-select-button');
-        
-        // const difficultyPageTitle = document.getElementById('difficulty-page-title')
-
+        const scorebox = document.getElementById('score');
+    
         const profileBox = document.getElementById('profile-box');
         const profileImg = document.getElementById('profile-image');
 
@@ -511,7 +523,7 @@
         const menuModal = document.getElementById('menuModal');
         const menuModalCloseButton = menuModal.querySelector('.close-button');
         const difficultyList = document.getElementById('difficulty-list');
-        const menuNavList = menuModal.querySelector('.menu-list[data-section="navigation"]'); // Get the navigation list
+        const menuNavList = menuModal.querySelector('.menu-list[data-section="navigation"]'); 
 
         const buttons = document.querySelectorAll('.c-button', '.start-button');
         let gameActive = false;
@@ -530,14 +542,32 @@
             }
         }
 
-        const profiles = {
-        "AI_1": {
-            "name": "Jason",
-            "answer": "fake",
-            "image": "Images/AI_1.jpg"
-            }
+        const profiles = { 
+            "AI_1": {
+                "answer": "AI",
+                "image": "Images/AI_1.jpg",
+                "source": "thispersondoesn'texist.com"
+                },
+            "AI_2": {
+                "answer":"AI",
+                "image": "Images/AI_2.jpg",
+                "source": "immasiddx via X, from Nano Banana Pro"
+                }
         }
 
+        const profileArray = Object.keys(profiles);
+        let currentProfile = profiles.AI_1;
+        
+        
+        function randomNumber(num) { 
+            console.log(profileArray);
+            let randomNum = Math.random();
+            randomNum = Math.floor(randomNum*10);
+            let idx = randomNum % num;
+            return idx-1;
+        }
+
+        
         // Function to show a specific screen and hide others
         function showScreen(screenId) {
             const screens = [landingPage, difficultySelectionPage, gamePage];
@@ -569,31 +599,45 @@
   
             if (String(seconds).length == 1) {
                 return String(minutes) + ":0" + String(seconds);
+            } else if (String(seconds).length == 1) {
+                return "0:0";
             }
             return String(minutes) + ":" + String(seconds);
         }
 
-        function changeProfile() {
-            image = profileImg.src;
+        function updateProfile() {
+            let idx = randomNumber(profileArray.length);
+            let profileName = profileArray[idx];
+            console.log(profiles);
+            document.getElementById('profile-image').src = profiles.profileName.image;
         }
+
         function startGame(totalSeconds) {
-            clearTimeout(countdownTimer); 
             formatTime(totalSeconds);
             tick(totalSeconds);
 
             buttons.forEach(button => {
                 button.addEventListener('click',  (event) => { 
                     const action = event.target.closest('.c-button')?.dataset.action;
+                    console.log(action);
+                    console.log(currentProfile.answer);
                     if (action) { 
-                        // if (action == currentProfile.answer) { 
-                        // } 
-                        // changeProfile();
-                        // if (action == currentProfile.answer) { 
-                        // } 
+                        if (action == currentProfile.answer) { 
+                            score++;
+                            document.getElementById('textdiv').innerText = score;
+                            updateProfile();
+                        } 
+                        if (action != currentProfile.answer) { 
+                            document.getElementById('textdiv').innerText = score;
+                            updateProfile();
+                        } 
                     }
                 });
             });
-            // showScreen('results-page');
+            if (totalSeconds == 0) {
+            showScreen('results-page');
+            }
+           
         }
 
         // Function to reset the game (full restart from landing page)
@@ -603,12 +647,6 @@
             currentProfileNumber = 0; // Reset part number
             showScreen('landing-page');
         }
-
-        // function loadProfile() { 
-        //     var image = profileImg;
-        //     const profile = profiles["AI_1"];
-        //     image.src = profile[image];
-        // }
 
         function loadGame(difficultyId) { 
             if (difficultyId == "easy") { 
@@ -625,6 +663,10 @@
                 console.error("Difficulty not found:", difficultyId);
                 return;
             }
+            clearTimeout(countdownTimer); 
+            score = 0;
+            document.getElementById('textdiv').innerText = 0;
+            document.getElementById('clockdiv').innerText = formatTime(countdownTimer);
             startGame(countdownTimer);
             showScreen('game-page');
         }

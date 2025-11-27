@@ -1,7 +1,13 @@
-[
+{ "AI_1":
     {
-        "name": "Jason",
-        "answer": "Real",
-        "image": "https://github.com/Morotai-png/Ai-or-I/blob/main/Images/AI_1.jpg?raw=true"
-    }
-]
+        "answer": "AI",
+        "image": "Images/AI_1.jpeg",
+        "source": "thispersondoesntexist.com"
+    },
+    "AI_2":
+        {
+            "answer":"AI",
+            "image": "Images/AI_2.jpeg",
+            "source": "https://x.com/immasiddx/status/1992979078220263720"
+        }
+}
