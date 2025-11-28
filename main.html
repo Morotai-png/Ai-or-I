@@ -185,7 +185,9 @@
         .c-button {
             background-color: aqua; 
             color: black;
-            border-radius: 50%;
+            border-radius: 75%;
+            width:12vh;
+            height:12vh;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
@@ -193,13 +195,13 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: 0.95rem;
+            font-size: 1.75rem;
         }
         
         .button-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 12vh;
             justify-content: center;
             width: 75%; 
         }
@@ -240,7 +242,51 @@
             padding-top: 5px;
             font-size: 16px;
         }
-        /* Menu button */
+
+        /* Results Page */
+        #results-page h2 {
+            font-family: 'Zalando Sans Expanded', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white; 
+            margin-bottom: 30px;
+        }
+
+        .results-button-grid {
+            display: grid;
+            grid-template-columns: repeat(1fr, 2);
+            gap: 15px;
+            width: 100%;
+            max-width: 700px;
+        }
+        .results-select-button {
+            font-family: 'Zalando Sans Expanded', sans-serif;
+            background-color: black; 
+            color: white;
+            padding: 20px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: none;
+            font-size: 1.05rem;
+            text-align: center;
+        }
+        #results-text {
+            font-family: 'Zalando Sans Expanded', sans-serif;
+            color: #fff;
+            font-weight: 150;
+            text-align: center;
+            font-size: 40px;
+        }
+
+        .results-select-button:hover {
+            background-color: teal; 
+            transform: translateY(-2px);
+        }
+
+        /* Menu */
         .menu-button {
             font-family:'Courier New', Courier, monospace;
             position: absolute;
@@ -450,8 +496,8 @@
                         <div>
                             <span class="minutes"></span>
                             <div class="text"></div>
+                        </div>
                     </div>
-                </div>
                     <div id="textdiv">
                         <div>
                             <span class="score"></span>
@@ -459,16 +505,30 @@
                         </div>
                     </div>
                 </div>
-            <h3 id="profile-name"></h3>
-            <img id="profile-image" src="Images/AI_1.jpg" data-action="AI">
-            <div class="action-area">
-                <div class="button-grid" id="action-buttons">
-                    <button class="c-button" data-action="AI"><i class="fa fa-close"></i></button>
-                    <button class="c-button" data-action="R"><i class="fa fa-heart"></i></button>
-                </div>
-            </div>    
+                <h3 id="profile-name"></h3>
+                <img id="profile-image" src="Images/AI_1.jpg" data-action="AI">
+                <div class="action-area">
+                    <div class="button-grid" id="action-buttons">
+                        <button class="c-button" data-action="AI"><i class="fa fa-close"></i></button>
+                        <button class="c-button" data-action="R"><i class="fa fa-heart"></i></button>
+                    </div>
+                </div>    
+            </div>
         </div>
-    </div>
+        <div id="results-page" class="hidden-screen">
+            <button id="menu-button-selection" class="menu-button">Menu</button>
+            <h2>Results:</h2>
+            <div id="results-text">
+                        <div>
+                            <span class="score"></span>
+                            <div class="text"></div>
+                        </div>
+                    </div>
+            <div class="results-button-grid" >
+                <button class="results-select-button" data-action="return"> Return to Homepage </button>
+                <button class="results-select-button" data-action="replay"> Play again </button>
+            </div>
+        </div>
 
         <div id="menuModal" class="modal">
         <div class="modal-content">
@@ -503,6 +563,7 @@
         let difficultyId = null;
         let countdownTimer = 0;
         let score = 0; 
+        let total = 0;
         let timer = document.getElementById('clockdiv').innerText;
         
         // DOM Elements
@@ -511,6 +572,7 @@
         const gamePage = document.getElementById('game-page');
         const startGameButton = document.getElementById('start-game-button');
         const difficultySelectButtons = document.querySelectorAll('.difficulty-select-button');
+        const resultsButtons = document.querySelectorAll('.results-select-button');
         const scorebox = document.getElementById('score');
     
         const profileBox = document.getElementById('profile-box');
@@ -542,31 +604,32 @@
             }
         }
 
-        const profiles = { 
-            "AI_1": {
-                "answer": "AI",
-                "image": "Images/AI_1.jpg",
-                "source": "thispersondoesn'texist.com"
-                },
-            "AI_2": {
-                "answer":"AI",
-                "image": "Images/AI_2.jpg",
-                "source": "immasiddx via X, from Nano Banana Pro"
-                }
+        function profile(answer, image, source, value) {
+            this.answer = answer;
+            this.image = image;
+            this.source = source; 
+            this.value = value;
         }
-
-        const profileArray = Object.keys(profiles);
-        let currentProfile = profiles.AI_1;
+        const AI_1 = new profile("AI", "Images/AI_1.jpg", "thispersondoesn'texist.com", Math.random());
+        const AI_2 = new profile("AI", "Images/AI_2.jpg", "https://x.com/immasiddx/status/1992979078220263720", Math.random());
+        const AI_3 = new profile("AI", "Images/AI_3.jpg", "https://x.com/abhijitwt/status/1993946199716712677", Math.random());
+        const R_1 = new profile("R", "Images/R_1.png", "https://unsplash.com/photos/a-couple-of-men-sitting-at-a-table-with-food-eGH2b7f_kws", Math.random());
+        const R_2 = new profile("R", "Images/R_2.jpg", "https://unsplash.com/photos/woman-in-blue-jacket-standing-beside-walls-ANNsvl-6AG0", Math.random());
         
         
+        const profileArray = [AI_1, AI_2, AI_3, R_1, R_2];
+        const profilelength = profileArray.length;
         function randomNumber(num) { 
-            console.log(profileArray);
             let randomNum = Math.random();
             randomNum = Math.floor(randomNum*10);
             let idx = randomNum % num;
-            return idx-1;
+            return idx;
         }
 
+        function randomiseArray() {
+            const gameArray = profileArray.sort(function(a, b){return a.value - b.value})
+            return gameArray;
+        }
         
         // Function to show a specific screen and hide others
         function showScreen(screenId) {
@@ -605,17 +668,20 @@
             return String(minutes) + ":" + String(seconds);
         }
 
-        function updateProfile() {
-            let idx = randomNumber(profileArray.length);
-            let profileName = profileArray[idx];
-            console.log(profiles);
-            document.getElementById('profile-image').src = profiles.profileName.image;
+        function updateProfile(array) {
+            total++;
+            if (total == profilelength+1) {
+                return null;
+            }
+            currentProfile = array.pop();
+            document.getElementById('profile-image').src = currentProfile.image;
+            document.getElementById('profile-image').action = currentProfile.answer;
+            return array;
         }
 
-        function startGame(totalSeconds) {
+        function startGame(totalSeconds, array) {
             formatTime(totalSeconds);
             tick(totalSeconds);
-
             buttons.forEach(button => {
                 button.addEventListener('click',  (event) => { 
                     const action = event.target.closest('.c-button')?.dataset.action;
@@ -625,19 +691,34 @@
                         if (action == currentProfile.answer) { 
                             score++;
                             document.getElementById('textdiv').innerText = score;
-                            updateProfile();
-                        } 
-                        if (action != currentProfile.answer) { 
+                            array = updateProfile(array);
+                        } else if (action != currentProfile.answer) { 
                             document.getElementById('textdiv').innerText = score;
-                            updateProfile();
+                            array = updateProfile(array);
                         } 
+                    }
+                    if (total == profilelength+1) {
+                        showScreen('results-page');
                     }
                 });
             });
-            if (totalSeconds == 0) {
+            if (countdownTimer == 0 || gameArray.length == 0) {
             showScreen('results-page');
-            }
-           
+            }  
+        }
+
+        function showResults() { 
+            document.getElementById('results-text').innerText = score;
+            buttons.forEach(button => {
+                button.addEventListener('click',  (event) => { 
+                    const action = event.target.closest('.results-select-button')?.dataset.action;
+                    if (action == "return") { 
+                        showScreen('landing-page');
+                    } else if (action == "replay") {
+                        showScreen('difficulty-selection-page');
+                    }
+                        });
+            });
         }
 
         // Function to reset the game (full restart from landing page)
@@ -667,7 +748,9 @@
             score = 0;
             document.getElementById('textdiv').innerText = 0;
             document.getElementById('clockdiv').innerText = formatTime(countdownTimer);
-            startGame(countdownTimer);
+            gameArray = randomiseArray(profileArray);
+            updateProfile(gameArray);
+            startGame(countdownTimer, gameArray);
             showScreen('game-page');
         }
 
@@ -767,6 +850,8 @@
                 loadGame(difficultyId);
             });
         });
+
+        
 
         // Initial game load: show landing page
         window.onload = () => {
