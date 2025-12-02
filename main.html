@@ -115,7 +115,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         .start-button:hover {
-            background-color: teal; /* Slightly lighter black */
+            background-color: teal;
             transform: translateY(-2px);
         }
         
@@ -494,7 +494,7 @@
                             <div class="text"></div>
                     </div>
                         <div>
-                            <span class="minutes"></span>
+                            <span class="seconds"></span>
                             <div class="text"></div>
                         </div>
                     </div>
@@ -517,17 +517,14 @@
         </div>
 
         <div id="results-page" class="hidden-screen">
-            <button id="menu-button-selection" class="menu-button">Menu</button>
+            <button id="menu-button-results" class="menu-button">Menu</button>
             <h2>Results:</h2>
             <div id="results-text">
-                <div>
-                    <span class="score"></span>
                     <div class="text"></div>
-                </div>
             </div>
             <div class="results-button-grid" >
                 <button class="results-select-button" data-action="return"> Return to Homepage </button>
-                <button class="results-select-button" data-action="replay"> Play again </button>
+                <button class="results-select-button" data-action="stats"> Show Answers </button>
             </div>
         </div>
 
@@ -565,16 +562,17 @@
         let countdownTimer = 0;
         let score = 0; 
         let total = 0;
+        let length = 5;
         let timer = document.getElementById('clockdiv').innerText;
         
         // DOM Elements
         const landingPage = document.getElementById('landing-page');
         const difficultySelectionPage = document.getElementById('difficulty-selection-page');
         const gamePage = document.getElementById('game-page');
+        const resultsPage = document.getElementById('results-page');
         const startGameButton = document.getElementById('start-game-button');
         const difficultySelectButtons = document.querySelectorAll('.difficulty-select-button');
         const resultsButtons = document.querySelectorAll('.results-select-button');
-        const scorebox = document.getElementById('score');
     
         const profileBox = document.getElementById('profile-box');
         const profileImg = document.getElementById('profile-image');
@@ -583,6 +581,7 @@
         const menuButtonLanding = document.getElementById('menu-button-landing');
         const menuButtonSelection = document.getElementById('menu-button-selection');
         const menuButtonGame = document.getElementById('menu-button-game');
+        const menuButtonResults = document.getElementById('menu-button-results');
         const menuModal = document.getElementById('menuModal');
         const menuModalCloseButton = menuModal.querySelector('.close-button');
         const difficultyList = document.getElementById('difficulty-list');
@@ -593,17 +592,7 @@
         let currentGameId = null;
         let currentTimer;
 
-        const difficulties = {            
-            'easy':{
-                time: "120",
-            },
-            'medium':{
-                time:"60"
-            },
-            'hard':{
-                time: "30"
-            }
-        }
+        const difficulties = {'easy':{time: "120"}, 'medium':{time:"60"}, 'hard':{time: "30"}}
 
         function profile(answer, image, source, value) {
             this.answer = answer;
@@ -619,6 +608,7 @@
         
         
         const profileArray = [AI_1, AI_2, AI_3, R_1, R_2];
+        const gameArray = [AI_1, AI_2, AI_3, R_1, R_2];
         const profilelength = profileArray.length;
         function randomNumber(num) { 
             let randomNum = Math.random();
@@ -627,14 +617,25 @@
             return idx;
         }
 
-        function randomiseArray() {
-            const gameArray = profileArray.sort(function(a, b){return a.value - b.value})
-            return gameArray;
+        // Randomise the profiles shown for unique games
+        function randomiseArray(array) {
+            if (array.length == 0) {
+               refillArray(array); 
+            }
+
+            array = array.sort(function(a, b) {return a.value - b.value})
+            return array;
         }
         
+        function refillArray(array) {
+            for (var i = 0; i < profileArray.length; i++) { 
+                array.push(profileArray[i]);
+            }
+        }
+
         // Function to show a specific screen and hide others
         function showScreen(screenId) {
-            const screens = [landingPage, difficultySelectionPage, gamePage];
+            const screens = [landingPage, difficultySelectionPage, gamePage, resultsPage];
             screens.forEach(screen => {
                 screen.classList.add('hidden-screen');
             });
@@ -657,6 +658,7 @@
             }, 1000);
         }
 
+        // display time on screen for game
         function formatTime(time) {
             minutes = Math.floor(time / 60);
             seconds = time - minutes * 60;
@@ -669,6 +671,7 @@
             return String(minutes) + ":" + String(seconds);
         }
 
+        // Change profile after answer selected
         function updateProfile(array) {
             total++;
             if (total == profilelength+1) {
@@ -680,14 +683,13 @@
             return array;
         }
 
+        // Game loop
         function startGame(totalSeconds, array) {
             formatTime(totalSeconds);
             tick(totalSeconds);
             buttons.forEach(button => {
                 button.addEventListener('click',  (event) => { 
                     const action = event.target.closest('.c-button')?.dataset.action;
-                    console.log(action);
-                    console.log(currentProfile.answer);
                     if (action) { 
                         if (action == currentProfile.answer) { 
                             score++;
@@ -699,26 +701,31 @@
                         } 
                     }
                     if (total == profilelength+1) {
-                        showScreen('results-page');
+                        showResults();
                     }
                 });
             });
             if (countdownTimer == 0 || gameArray.length == 0) {
-            showScreen('results-page');
+            showResults();
             }  
         }
 
+        // Results screen 
         function showResults() { 
-            document.getElementById('results-text').innerText = score;
-            buttons.forEach(button => {
+            showScreen('results-page');
+            document.getElementById('results-text').innerText = String(score) + " / " + String(total-1);
+            console.log(score);
+            resultsButtons.forEach(button => {
                 button.addEventListener('click',  (event) => { 
-                    const action = event.target.closest('.results-select-button')?.dataset.action;
+                    event.preventDefault();
+                    const action = event.target.dataset.action;
+                    
                     if (action == "return") { 
-                        showScreen('landing-page');
-                    } else if (action == "replay") {
+                        resetGame();
+                    } else if (action == "stats") {
                         showScreen('difficulty-selection-page');
                     }
-                        });
+                });
             });
         }
 
@@ -726,10 +733,18 @@
         function resetGame() {
             currentGameId = null;
             gameActive = false;
-            currentProfileNumber = 0; // Reset part number
+            countdownTimer = 0; 
+            currentProfile = 0; // Reset part number
+            score = 0;
+            total = 0;
+            difficultyId = null;
+            refillArray(gameArray);
+            populateMenuNavigation();
+            populateDifficultyList();
             showScreen('landing-page');
         }
 
+        // Load game data
         function loadGame(difficultyId) { 
             if (difficultyId == "easy") { 
                 difficulty = difficulties;
@@ -749,7 +764,7 @@
             score = 0;
             document.getElementById('textdiv').innerText = 0;
             document.getElementById('clockdiv').innerText = formatTime(countdownTimer);
-            gameArray = randomiseArray(profileArray);
+            randomiseArray(gameArray);
             updateProfile(gameArray);
             startGame(countdownTimer, gameArray);
             showScreen('game-page');
@@ -773,6 +788,12 @@
             populateDifficultyList(); 
         });
 
+        menuButtonResults.addEventListener('click', () => {
+            menuModal.style.display = 'flex';
+            populateMenuNavigation(); 
+            populateDifficultyList(); 
+        });
+
         menuModalCloseButton.addEventListener('click', (e) => {
             menuModal.style.display = 'none';
         });
@@ -786,6 +807,7 @@
             homeLink.textContent = 'Home (Landing Page)';
             homeLink.addEventListener('click', (e) => {
                 e.preventDefault();
+                resetGame();
                 menuModal.style.display = 'none';
                 showScreen('landing-page');
                 // Use smooth scroll to top of the page after showing it
@@ -851,8 +873,6 @@
                 loadGame(difficultyId);
             });
         });
-
-        
 
         // Initial game load: show landing page
         window.onload = () => {
